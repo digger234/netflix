@@ -312,11 +312,12 @@ def activate(cookie, code):
         "action": "nextAction",
         "authURL": auth,
         "tvLoginRendezvousCode": code,
+        "code": code,
     }
     sess.headers["referer"] = "https://www.netflix.com/tv2"
     try:
         r2 = sess.post("https://www.netflix.com/tv2", data=payload, timeout=15, allow_redirects=True, verify=False)
-        if "/tv/out/success" in r2.url or "tvLoginSuccess" in r2.text or "originatingDeviceLoginSuccess" in r2.text:
+        if "/tv/out/success" in r2.url or "/browse" in r2.url or "originatingDeviceLoginSuccess" in r2.text:
             return "success"
         return "fail"
     except Exception: return "fail"
